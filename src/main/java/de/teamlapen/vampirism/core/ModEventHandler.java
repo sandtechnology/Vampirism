@@ -10,20 +10,17 @@ import de.teamlapen.vampirism.config.Balance;
 import de.teamlapen.vampirism.config.Configs;
 import de.teamlapen.vampirism.entity.VampirismEntitySelectors;
 import de.teamlapen.vampirism.network.SyncConfigPacket;
-import de.teamlapen.vampirism.potion.FakeNightVisionPotion;
 import de.teamlapen.vampirism.util.DaySleepHelper;
 import de.teamlapen.vampirism.util.REFERENCE;
 import de.teamlapen.vampirism.world.ModWorldEventListener;
 import de.teamlapen.vampirism.world.villages.VampirismVillageCollection;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.event.EntitySelectorEvent;
-import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -79,15 +76,6 @@ public class ModEventHandler {
         }
     }
 
-    @SubscribeEvent
-    public void onPlayerJoinedWorld(EntityJoinWorldEvent entityJoinWorldEvent) {
-        if ((entityJoinWorldEvent.getEntity() instanceof EntityPlayer)) {
-            if (VampirismMod.proxy.isClientPlayerNull() || VampirismMod.proxy.isPlayerThePlayer((EntityPlayer) entityJoinWorldEvent.getEntity())) {
-                //Did not find a better position to place this, since onPostInit is to early
-                FakeNightVisionPotion.replaceNightVision();
-            }
-        }
-    }
 
     @SubscribeEvent
     public void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {

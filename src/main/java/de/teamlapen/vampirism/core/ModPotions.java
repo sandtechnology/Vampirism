@@ -9,6 +9,7 @@ import de.teamlapen.vampirism.potion.VampirismPotion;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLStateEvent;
+import net.minecraftforge.fml.common.registry.ExistingSubstitutionException;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 /**
@@ -37,7 +38,6 @@ public class ModPotions {
 
     private static void preInit(FMLPreInitializationEvent event) {
         thirst = register(new PotionThirst("thirst", true, 859494));
-        fakeNightVisionPotion = register(new FakeNightVisionPotion());
         sanguinare = register(new PotionSanguinare("sanguinare", false, 0x6A0888));
         saturation = register(new VampirismPotion("saturation", false, 0xDCFF00).setIconIndex(2, 0).setBeneficial());
         sunscreen = register(new VampirismPotion("sunscreen", false, 0xFFF100).setIconIndex(3, 0).setBeneficial());
@@ -45,6 +45,13 @@ public class ModPotions {
         fireProtection = register(new VampirismPotion("fire_protection", false, 14981690).setIconIndex(6, 0).setBeneficial());
         disguiseAsVampire = register(new VampirismPotion("disguise_as_vampire", false, 0x999900).setIconIndex(4, 0).setBeneficial());
         garlic = register(new VampirismPotion("garlic", true, 0xFFFFFF).setIconIndex(5, 0));
+        fakeNightVisionPotion = new FakeNightVisionPotion();
+
+        try {
+            GameRegistry.addSubstitutionAlias("minecraft:night_vision", GameRegistry.Type.POTION, fakeNightVisionPotion);
+        } catch (ExistingSubstitutionException e) {
+            e.printStackTrace();
+        }
     }
 
     private static <T extends Potion> T register(T potion) {

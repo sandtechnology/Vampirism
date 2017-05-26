@@ -62,8 +62,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.launchwrapper.Launch;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.datafix.FixTypes;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -121,11 +123,12 @@ public class VampirismMod {
             return new ItemStack(ModItems.vampireFang);
         }
     };
+    @GameRegistry.ObjectHolder("minecraft:night_vision")
+    public static Potion nightVision;
 
     public static boolean isRealism() {
         return Configs.realism_mode;
     }
-
     private VersionChecker.VersionInfo versionInfo;
     private ModCompatLoader modCompatLoader = new ModCompatLoader(REFERENCE.MODID + "/vampirism_mod_compat.cfg");
 
@@ -207,7 +210,7 @@ public class VampirismMod {
         finishAPI();
         proxy.onInitStep(IInitListener.Step.POST_INIT, event);
         modCompatLoader.onInitStep(IInitListener.Step.POST_INIT, event);
-
+        VampirismMod.log.t("Night Vision %s %s", nightVision, MobEffects.NIGHT_VISION);
     }
 
     @Mod.EventHandler
