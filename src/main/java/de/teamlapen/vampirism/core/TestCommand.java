@@ -23,6 +23,7 @@ import de.teamlapen.vampirism.tileentity.TileTent;
 import de.teamlapen.vampirism.util.VampireBookManager;
 import de.teamlapen.vampirism.world.GarlicChunkHandler;
 import de.teamlapen.vampirism.world.VampirismWorldData;
+import de.teamlapen.vampirism.world.gen.MapGenVampirismFeatures;
 import de.teamlapen.vampirism.world.gen.VampirismWorldGen;
 import de.teamlapen.vampirism.world.gen.structure.StructureManager;
 import de.teamlapen.vampirism.world.gen.structure.VampirismTemplate;
@@ -50,6 +51,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.ChunkProviderServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.minecraft.world.storage.MapData;
 import net.minecraft.world.storage.MapDecoration;
@@ -575,6 +577,26 @@ public class TestCommand extends BasicCommand {
                 //EntityDraculaHalloween draculaHalloween = (EntityDraculaHalloween) UtilLib.spawnEntityBehindEntity(p, new ResourceLocation(REFERENCE.MODID, ModEntities.SPECIAL_DRACULA_HALLOWEEN));
                 //draculaHalloween.setOwnerId(p.getUniqueID());
                 VampLib.proxy.getParticleHandler().spawnParticle(p.world, ModParticles.HALLOWEEN, p.posX, p.posY, p.posZ);
+            }
+        });
+        addSubcommand(new SubCommand() {
+            @Override
+            public String getName() {
+                return "structure_gen_test";
+            }
+
+            @Override
+            public String getUsage(ICommandSender sender) {
+                return getName();
+            }
+
+            @Override
+            public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+                EntityPlayer player=getCommandSenderAsPlayer(sender);
+                boolean flag=((ChunkProviderServer)player.getEntityWorld().getChunkProvider()).isInsideStructure(player.getEntityWorld(), MapGenVampirismFeatures.id,player.getPosition());
+                BlockPos pos = ((ChunkProviderServer)player.getEntityWorld().getChunkProvider()).getNearestStructurePos(player.getEntityWorld(),MapGenVampirismFeatures.id,player.getPosition(),true);
+                BlockPos pos2 = ((ChunkProviderServer)player.getEntityWorld().getChunkProvider()).getNearestStructurePos(player.getEntityWorld(),MapGenVampirismFeatures.id,player.getPosition(),false);
+                sender.sendMessage(new TextComponentString(String.format("%s %s %s",flag,pos,pos2)));
             }
         });
     }

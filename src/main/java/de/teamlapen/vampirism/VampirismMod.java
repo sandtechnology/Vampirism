@@ -44,6 +44,8 @@ import de.teamlapen.vampirism.tests.Tests;
 import de.teamlapen.vampirism.tileentity.TileTent;
 import de.teamlapen.vampirism.util.*;
 import de.teamlapen.vampirism.world.GarlicChunkHandler;
+import de.teamlapen.vampirism.world.gen.MapGenVampirismFeatures;
+import de.teamlapen.vampirism.world.gen.ModGenEventListener;
 import de.teamlapen.vampirism.world.gen.VampirismWorldGen;
 import de.teamlapen.vampirism.world.gen.structure.StructureManager;
 import de.teamlapen.vampirism.world.loot.LootHandler;
@@ -160,6 +162,8 @@ public class VampirismMod {
         VampireBookManager.getInstance().init();
         BloodPotions.register();
         StructureManager.init();
+        MinecraftForge.EVENT_BUS.register(new ModGenEventListener());
+        MapGenVampirismFeatures.doRegister();
         VampirismEntitySelectors.registerSelectors();
         registryManager.onInitStep(IInitListener.Step.INIT, event);
         proxy.onInitStep(IInitListener.Step.INIT, event);
