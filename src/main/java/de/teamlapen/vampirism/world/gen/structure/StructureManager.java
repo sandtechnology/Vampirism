@@ -2,7 +2,6 @@ package de.teamlapen.vampirism.world.gen.structure;
 
 import com.google.common.collect.Maps;
 import de.teamlapen.vampirism.VampirismMod;
-import de.teamlapen.vampirism.world.loot.LootHandler;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -15,7 +14,7 @@ import java.util.Map;
 public class StructureManager
 {
 
-    private final static Map<Structure, VampirismTemplate> templates = Maps.newHashMap();
+    private static final Map<Structure, VampirismTemplate> templates = Maps.newHashMap();
     private final static String TAG = "StructureManager";
 
     public static void init() {
@@ -37,7 +36,6 @@ public class StructureManager
             VampirismTemplate template = new VampirismTemplate();
             template.read(data);
             templates.put(structure, template);
-            if (structure.loot) template.setLootTable(LootHandler.addStructureLootTable(structure.name));
 
         } catch (IOException e) {
             VampirismMod.log.e(TAG, e, "Failed to load structure file %s", structure.name);

@@ -538,4 +538,12 @@ public class UtilLib {
         }
         return stack.getTagCompound();
     }
+
+    public static <T> T chooseRandom(T[] values, Random random) {
+        return values[random.nextInt(values.length)];
+    }
+
+    public static <T> T chooseRandom(List<T> values, Random random) {
+        return values.get(random.nextInt(values.size()));
+    }
 }

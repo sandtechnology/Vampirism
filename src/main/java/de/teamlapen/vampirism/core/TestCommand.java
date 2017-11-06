@@ -550,7 +550,12 @@ public class TestCommand extends BasicCommand {
                     if (template == null) {
                         throw new CommandException("Structure " + s + " was not loaded");
                     }
-                    template.addBlocksToWorld(p.world, p.getPosition().offset(EnumFacing.NORTH), new PlacementSettings());
+                    boolean pure = args.length > 1 && "pure".equals(args[1]);
+                    if (pure) {
+                        template.addBlocksToWorld(p.world, p.getPosition().offset(EnumFacing.NORTH), null, new PlacementSettings(), 2);
+                    } else {
+                        template.addBlocksToWorld(p.world, p.getPosition().offset(EnumFacing.NORTH), new PlacementSettings());
+                    }
 
                 } catch (IllegalArgumentException e) {
                     throw new CommandException("Structure " + args[0] + " not found.");
