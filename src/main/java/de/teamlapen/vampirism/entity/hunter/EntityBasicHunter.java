@@ -93,7 +93,7 @@ public class EntityBasicHunter extends EntityHunterBase implements IBasicHunter,
     @Override
     public boolean attackEntityAsMob(Entity entity) {
         boolean flag = super.attackEntityAsMob(entity);
-        if (flag && this.getHeldItemMainhand() == null) {
+        if (flag && ItemStackUtil.isEmpty(this.getHeldItemMainhand())) {
             this.swingArm(EnumHand.MAIN_HAND);  //Swing stake if nothing else is held
         }
         return flag;
@@ -148,7 +148,7 @@ public class EntityBasicHunter extends EntityHunterBase implements IBasicHunter,
 
     @Override
     public boolean isCrossbowInMainhand() {
-        return this.getHeldItemMainhand() != null && this.getHeldItemMainhand().getItem() instanceof VampirismItemCrossbow;
+        return this.getHeldItemMainhand().getItem() instanceof VampirismItemCrossbow;
     }
 
     @Override
@@ -250,7 +250,7 @@ public class EntityBasicHunter extends EntityHunterBase implements IBasicHunter,
         }
         if (tagCompund.hasKey("crossbow") && tagCompund.getBoolean("crossbow")) {
             this.setLeftHanded(true);
-            this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ModItems.basic_crossbow));
+            this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, tagCompund.getBoolean("advanced_crossbow") ? new ItemStack(ModItems.enhanced_crossbow) : new ItemStack(ModItems.basic_crossbow));
         } else {
             this.setLeftHanded(false);
             this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStackUtil.getEmptyStack());
@@ -304,6 +304,7 @@ public class EntityBasicHunter extends EntityHunterBase implements IBasicHunter,
         nbt.setInteger("level", getLevel());
         nbt.setBoolean("villageHunter", villageHunter);
         nbt.setBoolean("crossbow", isCrossbowInMainhand());
+        nbt.setBoolean("advanced_crossbow", isCrossbowInMainhand() && ModItems.enhanced_crossbow.equals(this.getHeldItemMainhand().getItem()));
     }
 
     @Override
