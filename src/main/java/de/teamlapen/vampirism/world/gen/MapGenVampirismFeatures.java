@@ -2,6 +2,8 @@ package de.teamlapen.vampirism.world.gen;
 
 import de.teamlapen.lib.lib.util.UtilLib;
 import de.teamlapen.vampirism.core.ModBiomes;
+import de.teamlapen.vampirism.entity.EntityGhost;
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Biomes;
 import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
@@ -11,8 +13,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.structure.MapGenStructure;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraft.world.gen.structure.StructureStart;
+import net.minecraftforge.common.MapGenStructureManager;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -20,7 +24,7 @@ import java.util.Random;
 /**
  * Map gen for Vampirism's smaller structures
  */
-public class MapGenVampirismFeatures extends MapGenStructure
+public class MapGenVampirismFeatures extends MapGenStructure implements MapGenStructureManager.ISpawningStructure
 {
 
     private static final List<Biome> BIOMELIST = Arrays.asList(ModBiomes.vampireForest, Biomes.ROOFED_FOREST, Biomes.DESERT, Biomes.PLAINS, Biomes.FOREST, Biomes.MESA, Biomes.SAVANNA, Biomes.ICE_PLAINS, Biomes.COLD_TAIGA, Biomes.TAIGA);
@@ -98,6 +102,13 @@ public class MapGenVampirismFeatures extends MapGenStructure
 
     @Override protected StructureStart getStructureStart(int chunkX, int chunkZ) {
         return new Start(this.world,this.rand,chunkX,chunkZ);
+    }
+
+    @Override
+    public List<Biome.SpawnListEntry> getSpawns(List<Biome.SpawnListEntry> defaults, World world, EnumCreatureType creatureType, BlockPos pos) {
+        List<Biome.SpawnListEntry> spawns = new ArrayList<>(defaults);
+        spawns.add(new Biome.SpawnListEntry(EntityGhost.class, 100, 2, 3));
+        return spawns;
     }
 
     public static class Start extends StructureStart {

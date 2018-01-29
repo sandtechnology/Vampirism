@@ -10,6 +10,7 @@ import de.teamlapen.vampirism.network.SyncConfigPacket;
 import de.teamlapen.vampirism.util.DaySleepHelper;
 import de.teamlapen.vampirism.util.REFERENCE;
 import de.teamlapen.vampirism.world.ModWorldEventListener;
+import de.teamlapen.vampirism.world.gen.MapGenVampirismFeatures;
 import de.teamlapen.vampirism.world.villages.VampirismVillage;
 import de.teamlapen.vampirism.world.villages.VampirismVillageHelper;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,8 +19,10 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.village.Village;
+import net.minecraft.world.gen.ChunkGeneratorOverworld;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.terraingen.InitMapGenEvent;
+import net.minecraftforge.event.terraingen.InitStructureGensEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -116,6 +119,11 @@ public class ModEventHandler {
             DaySleepHelper.checkSleepWorld(event.world);
             VampirismVillageHelper.tick(event.world);
         }
+    }
+
+    @SubscribeEvent
+    public void onInitSturctureGen(InitStructureGensEvent<ChunkGeneratorOverworld> event) {
+        event.addStructure(MapGenVampirismFeatures.getInstance());
     }
 
     @SubscribeEvent
