@@ -3,7 +3,6 @@
 # Minecraft
 crash-reports/
 /.metadata/
-/libs/
 /saves/
 /resourcepacks/
 /logs/
@@ -146,3 +145,4 @@ gradle-app.setting
 
 # # Work around https://youtrack.jetbrains.com/issue/IDEA-116898
 # gradle/wrapper/gradle-wrapper.properties
+!/libs/gradle-gpg-signing-plugin-0.1.0.jar
