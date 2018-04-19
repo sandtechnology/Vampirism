@@ -109,7 +109,13 @@ jar {
 
 signing {
     useGpgCmd()
-    required = false
+    required = false //Does not work https://github.com/gradle/gradle/issues/5064
     sign jar
+}
+
+tasks.withType(Sign) {
+    onlyIf {
+        gradle.taskGraph.hasTask(":uploadArchives") || gradle.taskGraph.hasTask(":curseforge")
+    }
 }
 

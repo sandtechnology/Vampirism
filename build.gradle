@@ -1,4 +1,4 @@
-import com.yubico.gradle.plugins.signing.gpg.GpgSigningPlugin
+
 
 buildscript {
     repositories {
@@ -14,7 +14,6 @@ buildscript {
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
-        classpath files('libs/gradle-gpg-signing-plugin-0.1.0.jar')
     }
 }
 
@@ -30,7 +29,6 @@ configurations {
 
 apply plugin: 'net.minecraftforge.gradle.forge'
 
-apply plugin: GpgSigningPlugin
 apply plugin: 'signing'
 
 loadProperties()
@@ -83,5 +81,4 @@ sourceSets
                     srcDir "$projectDir/src/test/resources"
                 }
             }
-
-        }
+}
